@@ -4,15 +4,16 @@ import { getResponse } from ".";
 
 const app = express();
 
-app.get("/", (req, res) => {
+app.post("/", async (req, res) => {
+  let result;
   AppDataSource.initialize()
     .then(async () => {
       console.log("init");
-      getResponse();
+      result = await getResponse(req.body);
+      return res.send(result);
     })
     .catch((error) => console.log(error));
 
-  res.send("Hello World");
 });
 
 app.listen(3000, () => {

@@ -6,7 +6,7 @@ import { StringOutputParser } from "langchain/schema/output_parser";
 import { DataSource } from "typeorm";
 import { SqlDatabase } from "langchain/sql_db";
 
-export async function getResponse() {
+export async function getResponse(question: string) {
   const datasource = new DataSource({
     type: "postgres",
     host: "localhost",
@@ -14,7 +14,7 @@ export async function getResponse() {
     username: "postgres",
     port: 5432,
     password: "admin",
-    database: "dvdrental",
+    database: "postgres",
   });
 
   const db = await SqlDatabase.fromDataSourceParams({
@@ -45,8 +45,9 @@ export async function getResponse() {
   ]);
 
   const res = await sqlQueryChain.invoke({
-    question: "What is the name of the second student in the students table?",
+    question: question,
   });
   console.log({ res });
   console.log("complete");
+  return res;
 }
