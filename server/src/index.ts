@@ -1,4 +1,3 @@
-import { AppDataSource } from "./data-source";
 import "reflect-metadata";
 import { ChatOllama } from "@langchain/community/chat_models/ollama";
 import { PromptTemplate } from "@langchain/core/prompts";
@@ -7,7 +6,7 @@ import { StringOutputParser } from "langchain/schema/output_parser";
 import { DataSource } from "typeorm";
 import { SqlDatabase } from "langchain/sql_db";
 
-async function getResponse() {
+export async function getResponse() {
   const datasource = new DataSource({
     type: "postgres",
     host: "localhost",
@@ -51,10 +50,3 @@ async function getResponse() {
   console.log({ res });
   console.log("complete");
 }
-
-AppDataSource.initialize()
-  .then(async () => {
-    console.log("init");
-    getResponse();
-  })
-  .catch((error) => console.log(error));
