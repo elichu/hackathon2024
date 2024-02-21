@@ -1,28 +1,38 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./App.css";
 
 function App() {
   const [message, setMessage] = useState<unknown>(null);
-  useEffect(() => {
-    async function fetchData() {
-      let res = await fetch("http://localhost:3000/fetch", {
-        method: "POST",
-        mode: "no-cors",
-        headers: {
-          "Content-Type": "text/html",
-        },
-        body: JSON.stringify("How many vendors are in the table?"),
-      });
+  const [value, setValue] = useState<string>("");
 
-      res = await res.json();
-      return res
-    }
-    fetchData().then((res) => setMessage(res.text));
-  }, []);
+  async function fetchData(e: React.FormEvent) {
+    e.preventDefault();
 
-  if (!message) return <h1>Loading...</h1>;
+    let res = await fetch("http://localhost:3000/fetch", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ text: value }),
+    });
 
-  return <h1>Message: {JSON.stringify(message)}</h1>;
+    res = await res.json();
+    setMessage(res.text);
+  }
+
+  return (
+    <div>
+      <form onSubmit={fetchData}>
+        <input
+          type="text"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+        />
+        <button type="submit"></button>
+      </form>
+      <h1>Message: {JSON.stringify(message)}</h1>
+    </div>
+  );
 }
 
 export default App;
