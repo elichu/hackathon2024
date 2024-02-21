@@ -28,7 +28,7 @@ function App() {
           value={value}
           onChange={(e) => setValue(e.target.value)}
         />
-        <button type="submit"></button>
+        <button type="submit">Submit</button>
       </form>
       <h1>Message: {JSON.stringify(message)}</h1>
     </div>
