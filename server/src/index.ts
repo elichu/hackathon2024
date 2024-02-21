@@ -6,7 +6,7 @@ import { StringOutputParser } from "langchain/schema/output_parser";
 import { DataSource } from "typeorm";
 import { SqlDatabase } from "langchain/sql_db";
 
-export async function getResponse(question: string) {
+export async function initDB() {
   const datasource = new DataSource({
     type: "postgres",
     host: "localhost",
@@ -21,11 +21,14 @@ export async function getResponse(question: string) {
     appDataSource: datasource,
   });
 
+  return db;
+}
+
+export async function getResponse(question: string, db: Promise<SqlDatabase>) {
   const model = new ChatOllama({
     baseUrl: "http://localhost:11434",
     model: "llama2",
   });
-
   const prompt =
     PromptTemplate.fromTemplate(`Based on the provided SQL table schema below, write a SQL query that would answer the user's question.
     ------------
@@ -36,7 +39,7 @@ export async function getResponse(question: string) {
     SQL QUERY:`);
   const sqlQueryChain = RunnableSequence.from([
     {
-      schema: async () => db.getTableInfo(),
+      schema: async () => (await db).getTableInfo(),
       question: (input: { question: string }) => input.question,
     },
     prompt,
