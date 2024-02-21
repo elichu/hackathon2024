@@ -22,7 +22,7 @@ app.post("/fetch", async (req, res) => {
     const db = initDB();
 
     result = await getResponse(req.body.text, db);
-    return res.send(result);
+    return res.send({ text: result });
   } catch {
     res.send({ text: "did not work" });
   }
