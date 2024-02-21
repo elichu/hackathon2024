@@ -1,6 +1,6 @@
 import express from "express";
 import { AppDataSource } from "./data-source";
-import { getResponse } from ".";
+import { getResponse, initDB } from ".";
 
 const app = express();
 
@@ -9,7 +9,8 @@ app.post("/", async (req, res) => {
   AppDataSource.initialize()
     .then(async () => {
       console.log("init");
-      result = await getResponse(req.body);
+      const db = initDB();
+      result = await getResponse(req.body, db);
       return res.send(result);
     })
     .catch((error) => console.log(error));
