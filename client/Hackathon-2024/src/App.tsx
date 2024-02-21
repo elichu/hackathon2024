@@ -14,9 +14,9 @@ function App() {
     })
      
       res = await res.json();
-      setMessage(res.text);
+      return res
     }
-    fetchData();
+    fetchData().then(res => setMessage(res.text));
   }, []);
 
   return <h1>Message: {JSON.stringify(message)}</h1>;
