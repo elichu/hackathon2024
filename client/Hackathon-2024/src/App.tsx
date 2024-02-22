@@ -21,17 +21,33 @@ function App() {
   }
 
   return (
-    <div>
-      <form onSubmit={fetchData}>
-        <input
-          type="text"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-        />
-        <button type="submit">Submit</button>
-      </form>
-      <h1>Message: {JSON.stringify(message)}</h1>
-    </div>
+    <>
+      <div id="input-wrapper">
+        <div id="header-wrapper">
+          <img id="ilx-icon-main" src="ILXIcon.svg" alt="" />
+          <h1 id="app-title">DBQueryGPT</h1>
+        </div>
+        <span>
+          Ask me for any kind of data you need in plain english! No more writing
+          complex queries for our users.
+        </span>
+        <form id="input-form" onSubmit={fetchData}>
+          <input
+            type="text"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            placeholder="What can I help you with?"
+          />
+          <button type="submit">Query</button>
+        </form>
+      </div>
+      {!message && (
+        <div id="result-board">
+          <h1>Here are your results:</h1>
+          <p>Message: {JSON.stringify(message)}</p>
+        </div>
+      )}
+    </>
   );
 }
 

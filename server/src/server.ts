@@ -15,7 +15,6 @@ app.post("/", async (req, res) => {
 app.post("/fetch", async (req, res) => {
   let result;
 
-  console.log(req.body);
   console.log("init");
 
   try {
