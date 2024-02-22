@@ -102,3 +102,7 @@ body{
   color: #004C8F;
   font-weight: 400;
 }
+
+#result-board p{
+  font-size: 1.25rem;
+}
