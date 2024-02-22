@@ -85,7 +85,7 @@ body{
   background-color: white;
   color: #004C8F;
   border-radius: 1000px;
-  border: 2px solid #004C8F;
+  border: 3px solid #004C8F;
   cursor: pointer;
 }
 
@@ -95,6 +95,7 @@ body{
   background-color: white;
   border-radius: 20px;
   box-shadow: rgba(0, 76, 143, 0.22) 0px 4px 14px;
+  padding: 0rem 1rem;
 }
 
 #result-board h1{

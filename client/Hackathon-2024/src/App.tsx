@@ -41,10 +41,10 @@ function App() {
           <button type="submit">Query</button>
         </form>
       </div>
-      {!message && (
+      {message && (
         <div id="result-board">
           <h1>Here are your results:</h1>
-          <p>Message: {JSON.stringify(message)}</p>
+          <p>{JSON.stringify(message)}</p>
         </div>
       )}
     </>

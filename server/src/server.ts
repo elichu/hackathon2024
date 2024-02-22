@@ -23,7 +23,7 @@ app.post("/fetch", async (req, res) => {
     result = await getResponse(req.body.text, db);
     return res.send({ text: result });
   } catch {
-    res.send({ text: "did not work" });
+    res.send({ text: "An unexpected error occured. Please try again" });
   }
 });
 
