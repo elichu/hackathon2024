@@ -1,28 +1,54 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./App.css";
 
 function App() {
   const [message, setMessage] = useState<unknown>(null);
-  useEffect(() => {
-    async function fetchData() {
-      let res = await fetch("http://localhost:3000/fetch", {
-        method: "POST",
-        mode: "no-cors",
-        headers: {
-          "Content-Type": "text/html",
-        },
-        body: JSON.stringify("How many vendors are in the table?"),
-      });
+  const [value, setValue] = useState<string>("");
 
-      res = await res.json();
-      return res
-    }
-    fetchData().then((res) => setMessage(res.text));
-  }, []);
+  async function fetchData(e: React.FormEvent) {
+    e.preventDefault();
 
-  if (!message) return <h1>Loading...</h1>;
+    let res = await fetch("http://localhost:3000/fetch", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ text: value }),
+    });
 
-  return <h1>Message: {JSON.stringify(message)}</h1>;
+    res = await res.json();
+    setMessage(res.text);
+  }
+
+  return (
+    <>
+      <div id="input-wrapper">
+        <div id="header-wrapper">
+          <img id="ilx-icon-main" src="ILXIcon.svg" alt="" />
+          <h1 id="app-title">DBQueryGPT</h1>
+        </div>
+        <span>
+          Ask me for any kind of data you need in plain english! No more writing
+          complex queries for our users.
+        </span>
+        <form id="input-form" onSubmit={fetchData}>
+          <input
+            type="text"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            placeholder="What can I help you with?"
+          />
+          <button type="submit">Query</button>
+        </form>
+      </div>
+      {message && (
+        <div id="result-board">
+          <h1>Here are your results:</h1>
+          <p>{JSON.stringify(message)}</p>
+        </div>
+      )}
+    </>
+  );
 }
 
 export default App;
